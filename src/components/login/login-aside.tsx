@@ -5,34 +5,18 @@ const LoginAside: FunctionComponent = () => {
     <div className="p-5 lg:p-10 lg:border rounded-lg">
       <img src="" alt="Chat app" />
 
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
-        error incidunt temporibus aut, asperiores doloribus placeat aspernatur
-        eveniet molestias vero sequi minus iure beatae, recusandae laboriosam
-        fuga ex minima autem.
+      <h1 className="text-4xl mt-2">Bienvenu sur Chat app</h1>
+
+      <p className="mt-5 text-lg">
+        Envoyer et recevoir instantanément des messages venant de tes proches et
+        tes amis.
       </p>
+
       <br />
 
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus
-        iure perspiciatis et quos laborum dolorum vero at unde ea maxime! Omnis
-        magnam ipsam quas culpa? Laborum ea maiores expedita praesentium.
-      </p>
-      <br />
-
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, voluptatum
-        consequatur nesciunt placeat, tempore reiciendis maiores dignissimos,
-        sed aliquid accusamus aliquam labore! Exercitationem doloribus
-        voluptatibus adipisci excepturi praesentium tempora laboriosam?
-      </p>
-      <br />
-
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi,
-        fugiat. Inventore, impedit, reiciendis vero ipsa deleniti velit,
-        suscipit aperiam accusantium nam fuga eius! Excepturi facilis nesciunt
-        aliquid! Maiores, sequi vitae!
+      <p className="text-lg">
+        Parler avec facilité avec des inconnus et étrangers <br />
+        <em>en continuant à élargir tes réseaux.</em>
       </p>
     </div>
   );

@@ -1,8 +1,9 @@
-import { render } from "@testing-library/react";
-import React from "react";
+import { render } from "../../test-utils";
 import Login from "./login";
+import "@testing-library/jest-dom";
 
-test("Login page rendered correctly", () => {
-  render(<Login />);
-  expect(1).toBe(1);
+test("Login page rendered successfully", () => {
+  const { getByRole, getByText } = render(<Login />);
+
+  expect(getByText("Se connecter")).toHaveTextContent("Se connecter");
 });

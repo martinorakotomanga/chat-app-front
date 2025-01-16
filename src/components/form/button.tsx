@@ -3,6 +3,7 @@ import { FunctionComponent } from "react";
 type Props = {
   size: "small" | "medium" | "large";
   className?: string;
+  onClick?: () => void;
   children: string;
   disabled?: boolean;
 };
@@ -10,6 +11,7 @@ type Props = {
 const Button: FunctionComponent<Props> = ({
   size,
   className = "",
+  onClick,
   children,
   disabled,
 }) => {
@@ -30,6 +32,7 @@ const Button: FunctionComponent<Props> = ({
   return (
     <button
       className={`${className} ${buttonSizeClassName}`}
+      onClick={onClick}
       disabled={disabled}
     >
       {children}

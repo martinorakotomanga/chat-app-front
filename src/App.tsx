@@ -1,9 +1,11 @@
 import Login from "./pages/login/login";
-import "./App.css";
 import { RouterProvider, createBrowserRouter } from "react-router";
 import UserAdd from "./pages/user-add";
 import UserEdit from "./pages/user-edit";
 import ErrorPage from "./pages/error-page";
+import Chat from "./pages/chat/chat";
+import Menu from "./pages/menu";
+import "./App.css";
 
 function App() {
   const _router = createBrowserRouter([
@@ -26,6 +28,16 @@ function App() {
         {
           path: "user/edit",
           element: <UserEdit />,
+        },
+        {
+          path: "menu",
+          element: <Menu />,
+          children: [
+            {
+              path: "messages",
+              element: <Chat />,
+            },
+          ],
         },
       ],
     },
