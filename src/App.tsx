@@ -1,51 +1,24 @@
-import Login from "./pages/login/login";
-import { RouterProvider, createBrowserRouter } from "react-router";
-import UserAdd from "./pages/user-add";
-import UserEdit from "./pages/user-edit";
-import ErrorPage from "./pages/error-page";
-import Chat from "./pages/chat/chat";
-import Menu from "./pages/menu";
+import createStore from "react-auth-kit/createStore";
+import AuthProvider from "react-auth-kit";
+import { BrowserRouter } from "react-router";
+import RoutesComponent from "./Routes";
 import "./App.css";
 
 function App() {
-  const _router = createBrowserRouter([
-    {
-      path: "/",
-      errorElement: <ErrorPage />,
-      children: [
-        {
-          index: true,
-          element: <Login />,
-        },
-        {
-          path: "login",
-          element: <Login />,
-        },
-        {
-          path: "user/add",
-          element: <UserAdd />,
-        },
-        {
-          path: "user/edit",
-          element: <UserEdit />,
-        },
-        {
-          path: "menu",
-          element: <Menu />,
-          children: [
-            {
-              path: "messages",
-              element: <Chat />,
-            },
-          ],
-        },
-      ],
-    },
-  ]);
+  const store = createStore({
+    authName: "_auth",
+    authType: "cookie",
+    cookieDomain: window.location.hostname,
+    cookieSecure: window.location.protocol === "https:",
+  });
 
   return (
     <div className="w-full h-full flex flex-col">
-      <RouterProvider router={_router} />
+      <AuthProvider store={store}>
+        <BrowserRouter>
+          <RoutesComponent />
+        </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }

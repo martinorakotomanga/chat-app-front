@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 
 type Props = {
+  type?: "button" | "reset" | "submit";
   size: "small" | "medium" | "large";
   className?: string;
   onClick?: () => void;
@@ -9,8 +10,9 @@ type Props = {
 };
 
 const Button: FunctionComponent<Props> = ({
-  size,
   className = "",
+  type,
+  size,
   onClick,
   children,
   disabled,
@@ -32,6 +34,7 @@ const Button: FunctionComponent<Props> = ({
   return (
     <button
       className={`${className} ${buttonSizeClassName}`}
+      type={type}
       onClick={onClick}
       disabled={disabled}
     >

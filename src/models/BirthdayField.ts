@@ -19,6 +19,8 @@ class BirthdayField extends Field {
 
     const age: number = actualYear - yearOfBirth;
 
+    console.log(this._value);
+
     if (age < 18) {
       this._error = `vous êtes encore mineur`;
       this._isValid = false;

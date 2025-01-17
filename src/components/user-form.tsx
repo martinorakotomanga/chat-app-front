@@ -12,7 +12,8 @@ import PhoneField from "../models/PhoneField";
 import PasswordField from "../models/PasswordField";
 import { isGender, isKeyOfObj } from "../typings/unknown";
 import User from "../models/User";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import UserService from "../services/user-service";
 
 type Props = {
   title: string;
@@ -25,6 +26,7 @@ const UserFormComponent: FunctionComponent<Props> = ({
   user,
   isEditForm,
 }) => {
+  const navigate = useNavigate();
   const [form, setForm] = useState<UserForm>({
     name: new NameField(user.name),
     firstName: new FirstNameField(user.firstName),
@@ -91,6 +93,13 @@ const UserFormComponent: FunctionComponent<Props> = ({
     return isAllFieldValid;
   };
 
+  const createUser = () => {
+    UserService.createUser(user).then(() => {
+      alert("Votre compte a été crée avec succès.");
+      navigate("/login");
+    });
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -100,8 +109,11 @@ const UserFormComponent: FunctionComponent<Props> = ({
       user.name = form.name.value;
       user.firstName = form.firstName.value;
       user.birthday = form.birthday.value;
+      user.phone = form.phone.value;
       user.gender = form.gender;
       user.password = form.password.value;
+
+      isAddForm ? createUser() : "";
     }
   };
 

@@ -20,12 +20,13 @@ const GroupWithMessageCard: FunctionComponent<Props> = ({
       onClick={onClick}
     >
       <h1 className="text-xl">{name}</h1>
-      <p className="mt-1 text-gray-700">
-        <div className="mt-3">{`${lastMessage.sender.name} ${lastMessage.sender.firstName}:`}</div>
-        <strong className={`${hasNewMessage ? "font-bold" : ""}`}>
+
+      <div className="mt-1 text-gray-700">
+        <h2 className="mt-3">{`${lastMessage.sender.name} ${lastMessage.sender.firstName}:`}</h2>
+        <p className={`${hasNewMessage ? "font-bold" : ""}`}>
           {lastMessage.content}
-        </strong>
-      </p>
+        </p>
+      </div>
     </div>
   );
 };
