@@ -14,7 +14,7 @@ class FirstNameField extends Field {
   }
 
   private isOnlyWords() {
-    const WORDS_REGEX: RegExp = /^[a-zA-Z ]{2,50}$/;
+    const WORDS_REGEX: RegExp = /^[a-zA-Zéàçêëèï ]{2,50}$/;
 
     if (!WORDS_REGEX.test(this._value)) {
       this._error = `composez entre 2 à 50 caractères`;

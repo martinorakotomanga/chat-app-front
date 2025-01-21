@@ -1,26 +1,31 @@
-import { FunctionComponent } from "react";
-import User from "../models/User";
+import { FunctionComponent, useEffect, useState } from "react";
 import UserFormComponent from "../components/user-form";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import UserState from "../typings/UserState";
+import User from "../models/User";
+import UserService from "../services/user-service";
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 const UserEdit: FunctionComponent = () => {
-  const user = new User(
-    "lksdjffasdf",
-    "RAKOTOMANGA",
-    "Martino Dora",
-    "2003-30-06",
-    "HOMME",
-    "+2611913131",
-    "Martino@3.0"
-  );
+  const [user, setUser] = useState<User>();
+  const authData = useAuthUser<UserState>();
+  const authHeader = useAuthHeader();
 
-  return (
-    <>
-      <UserFormComponent
-        title="Editer votre compte"
-        user={user}
-        isEditForm={true}
-      />
-    </>
+  useEffect(() => {
+    if (authData && authHeader)
+      UserService.findUserById(authData.id, authHeader).then(({ data }) =>
+        setUser(data)
+      );
+  }, [authData]);
+
+  return user ? (
+    <UserFormComponent
+      title="Editer votre compte"
+      user={user}
+      isEditForm={true}
+    />
+  ) : (
+    <h1>Aucun utilisateur à modifier !</h1>
   );
 };
 

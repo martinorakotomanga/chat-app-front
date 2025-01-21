@@ -9,6 +9,7 @@ import PasswordField from "../../models/PasswordField";
 import { isKeyOfObj } from "../../typings/unknown";
 import UserService from "../../services/user-service";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 const LoginFormComponent: FunctionComponent = () => {
   const signIn = useSignIn();
@@ -32,25 +33,25 @@ const LoginFormComponent: FunctionComponent = () => {
     setForm(newForm);
   };
 
+  const authorization = useAuthHeader();
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const responseJson = await UserService.login(
+    const { token, data } = await UserService.login(
       form.phone.value,
       form.password.value
     );
 
-    if ("error" in responseJson) return;
-
     const isSigned = signIn({
       auth: {
-        token: responseJson.token,
+        token,
         type: "Bearer",
       },
-      userState: {},
+      userState: data,
     });
 
-    if (isSigned) navigate("/menu/messages");
+    if (isSigned) navigate("/chat");
   };
 
   return (

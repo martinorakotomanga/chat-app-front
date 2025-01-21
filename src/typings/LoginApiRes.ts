@@ -1,11 +1,9 @@
-type LoginApiRes =
-  | {
-      msg: string;
-      token: string;
-    }
-  | {
-      msg: string;
-      error: Error;
-    };
+type LoginApiRes = {
+  msg: string;
+  token: string;
+  data: {
+    id: string;
+  };
+};
 
 export default LoginApiRes;

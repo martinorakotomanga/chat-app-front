@@ -25,13 +25,13 @@ const NavBar: FunctionComponent = () => {
     <nav className="pt-1 mb-3 shadow-sm">
       <ul className="flex justify-center">
         <li>
-          <NavBarLink to="/menu/friends">Amie</NavBarLink>
+          <NavBarLink to="/friends">Amie</NavBarLink>
         </li>
         <li>
-          <NavBarLink to="/menu/messages">Message</NavBarLink>
+          <NavBarLink to="/chat">Message</NavBarLink>
         </li>
         <li>
-          <NavBarLink to="/menu/settings">Paramètre</NavBarLink>
+          <NavBarLink to="/menu">Paramètre</NavBarLink>
         </li>
       </ul>
     </nav>

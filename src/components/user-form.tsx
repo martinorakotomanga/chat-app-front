@@ -14,6 +14,7 @@ import { isGender, isKeyOfObj } from "../typings/unknown";
 import User from "../models/User";
 import { Link, useNavigate } from "react-router";
 import UserService from "../services/user-service";
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 type Props = {
   title: string;
@@ -26,7 +27,6 @@ const UserFormComponent: FunctionComponent<Props> = ({
   user,
   isEditForm,
 }) => {
-  const navigate = useNavigate();
   const [form, setForm] = useState<UserForm>({
     name: new NameField(user.name),
     firstName: new FirstNameField(user.firstName),
@@ -36,6 +36,7 @@ const UserFormComponent: FunctionComponent<Props> = ({
     password: new PasswordField(user.password),
   });
 
+  const navigate = useNavigate();
   const isAddForm = !isEditForm;
 
   const handleChangeInputField = (e: ChangeEvent<HTMLInputElement>) => {
@@ -100,6 +101,16 @@ const UserFormComponent: FunctionComponent<Props> = ({
     });
   };
 
+  const authHeader = useAuthHeader();
+
+  const updateUser = () => {
+    if (authHeader)
+      UserService.updateUser(user, authHeader).then(() => {
+        alert("Votre compte a été modifié avec succès.");
+        navigate("/menu");
+      });
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -113,7 +124,7 @@ const UserFormComponent: FunctionComponent<Props> = ({
       user.gender = form.gender;
       user.password = form.password.value;
 
-      isAddForm ? createUser() : "";
+      isAddForm ? createUser() : updateUser();
     }
   };
 
@@ -198,9 +209,11 @@ const UserFormComponent: FunctionComponent<Props> = ({
       </div>
 
       <div className="w-full flex grid lg:grid-cols-2 lg:gap-4 mt-6">
-        <Link to="/" className="lg:col-start-2 underline self-end ms-6 p-2">
-          a déjà un compte ?
-        </Link>
+        {isAddForm && (
+          <Link to="/" className="lg:col-start-2 underline self-end ms-6 p-2">
+            a déjà un compte ?
+          </Link>
+        )}
 
         <Button size="medium" className="lg:col-start-2">
           {isEditForm ? "Enregistrer" : "Créer"}

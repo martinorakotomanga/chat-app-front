@@ -36,6 +36,11 @@ class PasswordField extends Field {
       this._isValid = false;
     }
 
+    if (this._value.trim().length <= 8) {
+      this._error += ", plus de 8 caractères";
+      this._isValid = false;
+    }
+
     this._error += ".";
 
     const passAllRequirement = this._isValid;

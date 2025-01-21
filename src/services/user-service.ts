@@ -1,26 +1,20 @@
 import User from "../models/User";
+import AUserRes from "../typings/AUserRes";
 import LoginApiRes from "../typings/LoginApiRes";
 
 class UserService {
   private static port: number = 8001;
+  private static BASE_URL: string = `http://localhost:${this.port}`;
 
   public static async createUser(user: User): Promise<User> {
-    const fetchOptions: RequestInit = {
+    const requestInit: RequestInit = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
     };
 
-    return fetch(`http://localhost:${this.port}/users`, fetchOptions)
-      .then(async (response) => {
-        const serverResponse = await response.json();
-
-        if (serverResponse.error) {
-          throw new Error(serverResponse.msg);
-        }
-
-        return serverResponse;
-      })
+    return fetch(`${this.BASE_URL}/users`, requestInit)
+      .then((response) => this.handleResponse(response))
       .catch((error) => this.handleError(error));
   }
 
@@ -28,7 +22,7 @@ class UserService {
     phone: string,
     password: string
   ): Promise<LoginApiRes> {
-    const fetchOptions: RequestInit = {
+    const requestInit: RequestInit = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -37,17 +31,47 @@ class UserService {
       }),
     };
 
-    return fetch(`http://localhost:8001/login`, fetchOptions).then(
-      async (response) => {
-        const serverResponse = await response.json();
+    return fetch(`${this.BASE_URL}/login`, requestInit)
+      .then((response) => this.handleResponse(response))
+      .catch((error) => this.handleError(error));
+  }
 
-        if (serverResponse.error || response.status !== 200) {
-          throw new Error(serverResponse.msg);
-        }
+  public static async findUserById(
+    id: string,
+    authorization: string
+  ): Promise<AUserRes> {
+    return fetch(`${this.BASE_URL}/users/${id}`, {
+      headers: { authorization },
+    })
+      .then((response) => this.handleResponse(response))
+      .catch((error) => this.handleError(error));
+  }
 
-        return serverResponse;
-      }
-    );
+  public static async updateUser(
+    user: User,
+    authorization: string
+  ): Promise<AUserRes> {
+    const requestInit: RequestInit = {
+      method: "PUT",
+      headers: { authorization, "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    };
+
+    return fetch(`${this.BASE_URL}/users/${user.id}`, requestInit)
+      .then((response) => this.handleResponse(response))
+      .catch((error) => this.handleError(error));
+  }
+
+  private static async handleResponse(response: Response) {
+    const { ok } = response;
+
+    if (!ok) {
+      const responseBody = await response.json();
+      const errorMsg = responseBody.msg;
+      throw new Error(errorMsg);
+    }
+
+    return response.json();
   }
 
   private static handleError(error: Error) {

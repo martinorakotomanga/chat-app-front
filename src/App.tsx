@@ -1,6 +1,5 @@
 import createStore from "react-auth-kit/createStore";
 import AuthProvider from "react-auth-kit";
-import { BrowserRouter } from "react-router";
 import RoutesComponent from "./Routes";
 import "./App.css";
 
@@ -15,9 +14,7 @@ function App() {
   return (
     <div className="w-full h-full flex flex-col">
       <AuthProvider store={store}>
-        <BrowserRouter>
-          <RoutesComponent />
-        </BrowserRouter>
+        <RoutesComponent />
       </AuthProvider>
     </div>
   );
